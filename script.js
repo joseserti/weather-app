@@ -1,5 +1,5 @@
-let cardsContainerEl = document.querySelector("#cards-container");
-let showsCardsEl = document.querySelector("#show-cards");
+let placeNameContainerEl = document.querySelector("#placeName-container");
+let colCard = document.querySelector("#col-card");
 
 const API_KEY = "3TYMUVGXW5H8UT63TFPZ3XWZ4"
 let dtmFirstDate = new Date();
@@ -9,6 +9,10 @@ dtmSecondDate.setDate(dtmSecondDate.getDate() + 7);
 function getForeCast() {
     let searchInputEl = document.querySelector("#txtSearchCity").value;
     if (searchInputEl != "") {
+
+        placeNameContainerEl.innerHTML = "";
+        colCard.innerHTML = "";
+
         let year = dtmFirstDate.getFullYear();
         let month = String(dtmFirstDate.getMonth() + 1).padStart(2, '0');
         let day = String(dtmFirstDate.getDate()).padStart(2, '0');
@@ -21,36 +25,68 @@ function getForeCast() {
         let formattedDate2 = year + '-' + month + '-' + day;
         // console.log(formattedDate2);
     
-    
-        console.log(searchInputEl);
         let API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + searchInputEl + "/" + formattedDate1 + "/" + formattedDate2 + "?key=" + API_KEY;
-        console.log(API_URL);
+        //console.log(API_URL);
     
         fetch(API_URL)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                // document.querySelector("#input-text").value = "";
                 // console.log(data);
+                
                 let cityTitle = document.createElement("h1");
                 cityTitle.innerHTML = data.resolvedAddress;
-                cardsContainerEl.append(cityTitle);
-            // let showPoster = document.createElement("img");
-    
-            // showPoster.setAttribute("src", show.show.image.medium);
-    
-    
-            let days = data.days.map((days) => {
-                // render tv shows
-                // showsContainerEl.append(showPoster);
-    
-                // let hr = document.createElement("hr");
-                // showsContainerEl.append(hr);
-    
-                console.log(days.icon);
-                console.log(days.conditions);
-                console.log(days.description);
-                console.log(days.datetime);
+                placeNameContainerEl.append(cityTitle);
+
+                let days = data.days.map((days) => {
+                    // Create the Card
+                    let card = document.createElement("div");
+                    card.className="card text-center";
+
+                    // Create ans set Card Header with the date of weather
+                    let cardDate = document.createElement("div");
+                    cardDate.className="card-header";
+                    cardDate.innerHTML = days.datetime;
+                    card.append(cardDate);
+
+                    // Create and set Card Icon with respective image
+                    let showIcon = document.createElement("img");
+                    showIcon.className="card-img-top";
+                    showIcon.setAttribute("size", "small");
+                    showIcon.setAttribute("src", "./assets/icons/" + days.icon + ".svg");
+                    card.appendChild(showIcon);
+
+                    // Create Card Body
+                    let cardBody = document.createElement("div")
+                    cardBody.className="card-body";
+
+                    // Create and set Card Title with weather conditions
+                    let cardConditions = document.createElement("h5");
+                    cardConditions.className="card-title";
+                    cardConditions.innerHTML = days.conditions;
+                    cardBody.appendChild(cardConditions);
+
+                    // Create and set Card Text with weather description
+                    let cardDescription = document.createElement("p");
+                    cardDescription.className="card-title";
+                    cardDescription.innerHTML = days.description;
+                    cardBody.appendChild(cardDescription);
+                    
+                    // Create ans set Card Footer with the Min and Max Temp
+                    let cardMinMax = document.createElement("div");
+                    cardMinMax.className="card-footer";
+                    cardMinMax.innerHTML = "Min. Temp: " + days.tempmin + " -/-  Max. Temp: " + days.tempmax
+                    
+                    // Add Card Body to Card
+                    card.append(cardBody);
+                    // Add Card Footer to Card
+                    card.appendChild(cardMinMax);
+                    // Add Card to Page
+                    colCard.append(card);
+
+                    // console.log(days.icon);
+                    // console.log(days.conditions);
+                    // console.log(days.description);
+                    // console.log(days.datetime);
             });
         });
     }
