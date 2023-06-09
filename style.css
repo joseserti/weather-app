@@ -1,0 +1,29 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #5c5c5c
+}
+
+h1 {
+  color: #fff;
+}
+
+.body {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.container {
+  width: 90%;
+  height: 90%;
+  border: solid 1px #fff;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-image: url("../assets/img/background3.jpg");
+  background-size: cover;
+}
