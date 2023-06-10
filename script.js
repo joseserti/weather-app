@@ -38,11 +38,14 @@ function getForeCast() {
                 placeNameContainerEl.append(cityTitle);
 
                 let days = data.days.map((days) => {
+                    let cards = document.createElement("div");
+                    cards.className="col-12 col-md-6 col-lg-4 p-3";
+
                     // Create the Card
                     let card = document.createElement("div");
                     card.className="card text-center";
 
-                    // Create ans set Card Header with the date of weather
+                    // Create and set Card Header with the date of weather
                     let cardDate = document.createElement("div");
                     cardDate.className="card-header";
                     cardDate.innerHTML = days.datetime;
@@ -50,6 +53,7 @@ function getForeCast() {
 
                     // Create and set Card Icon with respective image
                     let showIcon = document.createElement("img");
+
                     showIcon.className="card-img-top";
                     showIcon.setAttribute("size", "small");
                     showIcon.setAttribute("src", "./assets/icons/" + days.icon + ".svg");
@@ -74,14 +78,16 @@ function getForeCast() {
                     // Create ans set Card Footer with the Min and Max Temp
                     let cardMinMax = document.createElement("div");
                     cardMinMax.className="card-footer";
-                    cardMinMax.innerHTML = "Min. Temp: " + days.tempmin + " -/-  Max. Temp: " + days.tempmax
+                    cardMinMax.innerHTML = "Min: " + days.tempmin + " -/-  Max: " + days.tempmax
                     
                     // Add Card Body to Card
                     card.append(cardBody);
                     // Add Card Footer to Card
                     card.appendChild(cardMinMax);
+
+                    cards.append(card);
                     // Add Card to Page
-                    colCard.append(card);
+                    colCard.append(cards);
 
                     // console.log(days.icon);
                     // console.log(days.conditions);

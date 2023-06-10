@@ -16,8 +16,10 @@ h1 {
   font-family: 'Roboto', sans-serif;
 }
 
-img {
+.card-img-top {
+  height: 150px;
   padding: 1rem;
+  vertical-align: middle;
 }
 
 .card-header, .card-footer {
@@ -63,13 +65,13 @@ img {
   background-size: cover;
 }
 
-#col-card {
+/* #col-card {
   display: grid;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
-}
+} */
 
 .card {
   opacity: 60%;
